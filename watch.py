@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):  # The callback for when a PUBLISH messag
     if r.status_code != 200:
         print("Error posting data to flask: {}".format(json.dumps(r)))
 
-client = mqtt.Client("wood-wiliot-test")  # Create instance of client with client ID
+client = mqtt.Client("wserv watcher")  # Create instance of client with client ID
 client.on_connect = on_connect  # Define callback function for successful connection
 client.on_message = on_message  # Define callback function for receipt of a message
 client.on_subscribe = on_subscribe
