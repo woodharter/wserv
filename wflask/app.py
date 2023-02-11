@@ -1,6 +1,11 @@
 from flask import Flask, make_response, request
 import json
 
+# Wiliot Hackathon entry for William Wood Harter
+# (c) copyright 2023 - William Wood Harter
+#
+# License: MIT License
+
 # for now we are just going to maintain the data since the last start of flask
 # I could db this, but for now this seems like a good starting place.
 

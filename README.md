@@ -1,6 +1,8 @@
 # WServ
 
-William Wood Harter building some kind of Wiliot app
+William Wood Harter building some kind of Wiliot app.
+
+No idea what it does yet.  Maybe a fridge monitor or around the house measurements. The tracking from a distance seems hard since I don't have any kind of access to a logistics workflow.
 
 
 ```
@@ -29,3 +31,7 @@ cd wflask
 flask run
 ```
 
+Wiliot Hackathon entry for William Wood Harter<br/>
+(c) copyright 2023 - William Wood Harter
+
+License: MIT License

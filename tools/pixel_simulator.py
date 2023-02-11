@@ -3,6 +3,10 @@ import json
 import paho.mqtt.client as mqtt
 import time
 
+# Wiliot Hackathon entry for William Wood Harter
+# (c) copyright 2023 - William Wood Harter
+#
+# License: MIT License
 
 def on_connect(client, userdata, flags, rc):  # The callback for when the client connects to the broker
     print("Connected result code {0}".format(str(rc)))

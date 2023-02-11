@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Wiliot Hackathon entry for William Wood Harter
+# (c) copyright 2023 - William Wood Harter
+#
+# License: MIT License
+
 # run
 if [ "$WSERV_DEBUG" = "TRUE" ];
 then
