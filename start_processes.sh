@@ -18,7 +18,7 @@ else
     cd /wserv
     python3 watch.py&
 
-    echo "STARTING npm server"
+    echo "STARTING npm server watch.py"
     cd /wserv/ui
     npm start
 
