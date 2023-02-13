@@ -29,7 +29,17 @@ cd /mnt/wserv
 python3 watch.py&
 cd wflask
 flask run
+
+cd wflask/tools
+python3 pixel_simulator.py
+
+cd wflask/ui
+npm start
+
 ```
+
+## React UI
+The UI is a react interface that will evetually be generated into a page and hosted along with flask. For now in debug you'll run it separate.
 
 Wiliot Hackathon entry for William Wood Harter<br/>
 (c) copyright 2023 - William Wood Harter

@@ -18,6 +18,10 @@ else
     cd /wserv
     python3 watch.py&
 
+    echo "STARTING npm server"
+    cd /wserv/ui
+    npm start
+
     echo "STARTING WSERV flask"
     cd /wserv/wflask
     flask run --host=0.0.0.0

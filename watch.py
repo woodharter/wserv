@@ -21,9 +21,12 @@ def on_subscribe(client, userdata, mid, granted_qos, properties=None):
 
 def on_message(client, userdata, msg):  # The callback for when a PUBLISH message is received from the server.
     print("Message received Topic[" + msg.topic + "]  Payload[" + str(msg.payload) + "]")  # Print a received msg
-    r = requests.post('http://localhost:5000/api/add_data', headers={"Content-Type":"Application/json"}, data=msg.payload)
-    if r.status_code != 200:
-        print("Error posting data to flask: {}".format(json.dumps(r)))
+    try:
+        r = requests.post('http://localhost:5000/api/add_data', headers={"Content-Type":"Application/json"}, data=msg.payload)
+        if r.status_code != 200:
+            print("Error posting data to flask: {}".format(json.dumps(r)))
+    except Exception as e:
+        print("Error connecting to local flask server: {}".format(e))
 
 client = mqtt.Client("wserv watcher")  # Create instance of client with client ID
 client.on_connect = on_connect  # Define callback function for successful connection
