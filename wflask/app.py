@@ -8,11 +8,45 @@ import json
 
 # for now we are just going to maintain the data since the last start of flask
 # I could db this, but for now this seems like a good starting place.
-
 data = []
+pixel_last_temp = {}
+
+# These are wrapper functions that will go into a database at some point
+def db_connect():
+    # eventually this will be a real db. for now just load all the past
+    # data into memory
+    db_read_raw_data()
+
+def db_store_raw_data(new_entry):
+    data.append(new_entry)
+
+    # hack to store the stream in a text file
+    txt_db = open("raw_data_received.txt","a")
+    txt_db.write(json.dumps(new_entry)+"\n")
+    txt_db.close()
+
+def db_read_raw_data():
+    txt_db =  open("raw_data_received.txt","r")
+    for line in txt_db.readlines():
+        new_entry = json.loads(line)
+        data.append(new_entry)
+        db_store_last_pixel_temp(new_entry)
+
+    print(f"db ready: {len(data)} entries")
+
+def db_store_last_pixel_temp(new_entry):
+    if ('eventName' in new_entry) and (new_entry['eventName']=='temperature'):
+        pixel_last_temp['assetId'] = {
+            'temp': new_entry['value'],
+            'time': new_entry['startTime']
+        }
+
+def db_get_last_pixel_temps():
+    return pixel_last_temp
+
 
 app = Flask(__name__)
-
+db_connect()
 
 @app.route('/')
 def hello():
@@ -23,7 +57,20 @@ def hello():
 @app.route('/api/add_data', methods=['POST'])
 def add_data():
     content = request.get_json(silent=True)
-    data.append(content)
+    db_store_raw_data(content)
+    db_store_last_pixel_temp(content)
+
+
     # print(json.dumps(content))
     print(f"datapoints: {len(data)}")
     return make_response(json.dumps({"status":"success",}),200)
+
+# curl GET http://localhost:5000/api/pixels
+# get the list of pixels and their last date/temperature
+@app.route('/api/pixels', methods=['GET'])
+def get_pixels():
+    make_response(json.dumps(
+        {
+            "status":"success",
+            "pixels": db_get_last_pixel_temps()
+        }), 200)
