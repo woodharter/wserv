@@ -69,7 +69,7 @@ def add_data():
 # get the list of pixels and their last date/temperature
 @app.route('/api/pixels', methods=['GET'])
 def get_pixels():
-    make_response(json.dumps(
+    return make_response(json.dumps(
         {
             "status":"success",
             "pixels": db_get_last_pixel_temps()
