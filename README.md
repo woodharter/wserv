@@ -28,7 +28,7 @@ docker exec -it wserv bash
 cd /mnt/wserv
 python3 watch.py&
 cd wflask
-flask run
+flask run --host=0.0.0.0
 
 cd wflask/tools
 python3 pixel_simulator.py

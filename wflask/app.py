@@ -1,4 +1,5 @@
 from flask import Flask, make_response, request
+from flask_cors import CORS, cross_origin
 import json
 
 # Wiliot Hackathon entry for William Wood Harter
@@ -36,7 +37,7 @@ def db_read_raw_data():
 
 def db_store_last_pixel_temp(new_entry):
     if ('eventName' in new_entry) and (new_entry['eventName']=='temperature'):
-        pixel_last_temp['assetId'] = {
+        pixel_last_temp[new_entry['assetId']] = {
             'temp': new_entry['value'],
             'time': new_entry['startTime']
         }
@@ -47,14 +48,17 @@ def db_get_last_pixel_temps():
 
 app = Flask(__name__)
 db_connect()
+CORS(app, support_credentials=True)
 
 @app.route('/')
+@cross_origin(supports_credentials=True)
 def hello():
     return '<h1>William Wood Harter - Wiliot Hackathon</h1>'
 
 
 # the wserv MQTT listener will post data here
 @app.route('/api/add_data', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def add_data():
     content = request.get_json(silent=True)
     db_store_raw_data(content)
@@ -65,9 +69,11 @@ def add_data():
     print(f"datapoints: {len(data)}")
     return make_response(json.dumps({"status":"success",}),200)
 
-# curl GET http://localhost:5000/api/pixels
+
+# curl http://localhost:5000/api/pixel
 # get the list of pixels and their last date/temperature
 @app.route('/api/pixels', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_pixels():
     return make_response(json.dumps(
         {
