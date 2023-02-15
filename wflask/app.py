@@ -11,12 +11,17 @@ import json
 # I could db this, but for now this seems like a good starting place.
 data = []
 pixel_last_temp = {}
+pixel_names = {}
 
 # These are wrapper functions that will go into a database at some point
 def db_connect():
     # eventually this will be a real db. for now just load all the past
     # data into memory
     db_read_raw_data()
+
+    # load the device names db
+    pixel_names = json.load(open('./db_pixel_names.json'))
+    print("pixel_names = {}".format(json.dumps(pixel_names,indent=2)))
 
 def db_store_raw_data(new_entry):
     data.append(new_entry)
@@ -36,7 +41,7 @@ def db_read_raw_data():
     print(f"db ready: {len(data)} entries")
 
 def db_store_last_pixel_temp(new_entry):
-    if ('eventName' in new_entry) and (new_entry['eventName']=='temperature'):
+    if (new_entry) and ('eventName' in new_entry) and (new_entry['eventName']=='temperature'):
         pixel_last_temp[new_entry['assetId']] = {
             'temp': new_entry['value'],
             'time': new_entry['startTime']
