@@ -6,9 +6,6 @@ export function getLastTemps() {
     .then(data => data.json()); //['pixels'])
 }
 
-function renderPixelList(temps) {
-
-}
 
 function App() {
   const [lastTemps, setLastTemps] = useState({});
@@ -36,7 +33,7 @@ function App() {
         (() => {
             if ((lastTemps) && (lastTemps["pixels"])) {
               //lastTemps.map(t => <li key={t.item}>{t.item}</li>)
-              return Object.entries(lastTemps["pixels"]).map( ([key, value]) => <li>{new Date(value["time"]*1000).toLocaleString()} {value["temp"].toFixed(2)}&deg;C </li> )
+              return Object.entries(lastTemps["pixels"]).map( ([key, value]) => <li>{new Date(value["time"]*1).toLocaleString()} - {value["pixelname"]}={Number(value["temp"]).toFixed(2)}&deg;C </li> )
               //console.log("rendering "+JSON.stringify(lastTemps["pixels"]))
               //return JSON.stringify(lastTemps["pixels"])
             }

@@ -26,7 +26,7 @@ def on_message(client, userdata, msg):  # The callback for when a PUBLISH messag
         if r.status_code != 200:
             print("Error posting data to flask: {}".format(json.dumps(r)))
     except Exception as e:
-        print("Error connecting to local flask server: {}".format(e))
+        print("ERROR connecting to local flask server: {}".format(e))
 
 client = mqtt.Client("wserv watcher")  # Create instance of client with client ID
 client.on_connect = on_connect  # Define callback function for successful connection

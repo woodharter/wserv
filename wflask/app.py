@@ -15,13 +15,16 @@ pixel_names = {}
 
 # These are wrapper functions that will go into a database at some point
 def db_connect():
+    # load the device names db
+    global pixel_names
+    pixel_names = json.load(open('./db_pixel_names.json'))
+    print(f"pixel_names={json.dumps(pixel_names)}")
+
     # eventually this will be a real db. for now just load all the past
     # data into memory
     db_read_raw_data()
 
-    # load the device names db
-    pixel_names = json.load(open('./db_pixel_names.json'))
-    print("pixel_names = {}".format(json.dumps(pixel_names,indent=2)))
+
 
 def db_store_raw_data(new_entry):
     data.append(new_entry)
@@ -44,11 +47,18 @@ def db_store_last_pixel_temp(new_entry):
     if (new_entry) and ('eventName' in new_entry) and (new_entry['eventName']=='temperature'):
         pixel_last_temp[new_entry['assetId']] = {
             'temp': new_entry['value'],
-            'time': new_entry['startTime']
+            'time': new_entry['startTime'],
+            'pixelname': db_get_pixel_name(new_entry['assetId'])
         }
 
 def db_get_last_pixel_temps():
     return pixel_last_temp
+
+def db_get_pixel_name(assetId):
+    if assetId in pixel_names:
+        return pixel_names[assetId]
+    print(f"assetId {assetId} got no name from:\n{json.dumps(pixel_names)}")
+    return 'no name'
 
 
 app = Flask(__name__)

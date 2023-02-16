@@ -21,8 +21,8 @@ curl.exe -X POST -H "Content-Type: Application/json" -d "{\"hello\":\"world\"}" 
 I like the ability to shell into the container and start and stop flask and the other apps without having to rebuild the whole container every time.
 
 ```
-docker build -t --build-arg WSERV_DEBUG="TRUE" wserv1 -f Dockerfile_app .
-docker run -p 5000:5000 -v ${pwd}:/mnt/wserv --name wserv wserv1
+docker build --build-arg WSERV_DEBUG="TRUE" -t wserv1 -f Dockerfile_app .
+docker run -p 5000:5000 -p 3000:3000 -v ${pwd}:/mnt/wserv --name wserv wserv1
 
 docker exec -it wserv bash
 cd /mnt/wserv
@@ -30,11 +30,11 @@ python3 watch.py&
 cd wflask
 flask run --host=0.0.0.0
 
-cd wflask/tools
+cd /mnt/wserv/tools
 python3 pixel_simulator.py
 
-cd wflask/ui
-npm start
+cd /mnt/wserv/ui
+npm run start
 
 ```
 

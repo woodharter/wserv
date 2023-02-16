@@ -20,7 +20,7 @@ else
 
     echo "STARTING npm server watch.py"
     cd /wserv/ui
-    npm start
+    npm start&
 
     echo "STARTING WSERV flask"
     cd /wserv/wflask
