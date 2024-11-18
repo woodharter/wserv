@@ -2,7 +2,7 @@
 
 William Wood Harter building some kind of Wiliot app.
 
-No idea what it does yet.  Maybe a fridge monitor or around the house measurements. The tracking from a distance seems hard since I don't have any kind of access to a logistics workflow.
+There were a couple of use cases for this. A fridge monitor or around the house measurements. While building out the tracking part of this application to monitor temperature of the Wiliot sensor I build a simulator that tracked a device as it traversed a network of sensors. This application would send events that looked exactly like the sensor and was used in testing the final solutoin.
 
 
 ```
